@@ -77,7 +77,7 @@ else{
   const seconds = String(dateObject.getSeconds()).padStart(2, '0');
 
   if(isNaN(dateObject)){
-    res.json({ error: "invalid date" })
+    res.json({ error: "invalid Date" })
   }
   else{
     res.json({
