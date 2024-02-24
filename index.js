@@ -55,11 +55,16 @@ app.get("/api/:date", function(req, res){
   const hours = String(dateObject.getHours()).padStart(2, '0');
   const minutes = String(dateObject.getMinutes()).padStart(2, '0');
   const seconds = String(dateObject.getSeconds()).padStart(2, '0');
-  
-  res.json({
-      unix: unixTime,
-      utc: `${dayName}, ${date} ${monthName} ${year} ${hours}:${minutes}:${seconds} GMT`
-    })
+
+  if(isNaN(dateObject)){
+    res.json({ error: "invalid date" })
+  }
+  else{
+    res.json({
+        unix: unixTime,
+        utc: `${dayName}, ${date} ${monthName} ${year} ${hours}:${minutes}:${seconds} GMT`
+      })
+  }
 
 })
 
