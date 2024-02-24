@@ -65,21 +65,21 @@ else{
     timeSetter(dateObject);
 }
   
-  const date = dateObject.getDate();
-  const dayNum = dateObject.getDay();
-  const dayName = days[dayNum];
-  const unixTime = dateObject.getTime();
-  const monthNum = dateObject.getMonth();
-  const monthName = months[monthNum];
-  const year = dateObject.getFullYear();
-  const hours = String(dateObject.getHours()).padStart(2, '0');
-  const minutes = String(dateObject.getMinutes()).padStart(2, '0');
-  const seconds = String(dateObject.getSeconds()).padStart(2, '0');
 
-  if(isNaN(dateObject)){
-    res.json({ error: "invalid Date" })
-  }
-  else{
+if(isNaN(dateObject)){
+  res.json({ error: "invalid Date" })
+}
+else{
+    const date = dateObject.getDate();
+    const dayNum = dateObject.getDay();
+    const dayName = days[dayNum];
+    const unixTime = dateObject.getTime();
+    const monthNum = dateObject.getMonth();
+    const monthName = months[monthNum];
+    const year = dateObject.getFullYear();
+    const hours = String(dateObject.getHours()).padStart(2, '0');
+    const minutes = String(dateObject.getMinutes()).padStart(2, '0');
+    const seconds = String(dateObject.getSeconds()).padStart(2, '0');
     res.json({
         unix: unixTime,
         utc: `${dayName}, ${date} ${monthName} ${year} ${hours}:${minutes}:${seconds} GMT`
