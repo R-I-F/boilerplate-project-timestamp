@@ -50,7 +50,7 @@ app.get("/api/", function(req, res){
 
 })
 
-app.get("/api/:date", function(req, res){
+app.get("/api/:date?", function(req, res){
 
   const inputParam = req.params.date
   let dateObject;
