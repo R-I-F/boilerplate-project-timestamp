@@ -57,12 +57,10 @@ app.get("/api/:date?", function(req, res){
   if (inputParam.includes("-")){ 
     // if the req.params.date is in the format of a date
     dateObject = new Date(inputParam);
-    timeSetter(dateObject);
 }
 else{
     // else if it is a unix timestamp
     dateObject = new Date(parseInt(inputParam))
-    timeSetter(dateObject);
 }
   
 
@@ -87,13 +85,6 @@ else{
   }
 
 })
-
-function timeSetter(dateObject){
-    dateObject.setHours(0);
-    dateObject.setMinutes(0);
-    dateObject.setSeconds(0);
-}
-
 
 
 
