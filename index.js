@@ -32,7 +32,7 @@ const months = ['Jan', 'Feb', 'March', 'April', 'May', 'June', 'July', 'Aug', 'S
 
 app.get("/api/", function(req, res){
   const dateObject = new Date()
-  const date = dateObject.getDate();
+  const date = dateObject.getDate().toString().padStart(2, 0);
   const unixTime = dateObject.getTime();
   const dayNum = dateObject.getDay();
   const dayName = days[dayNum];
@@ -45,7 +45,7 @@ app.get("/api/", function(req, res){
 
   res.json({
     unix: unixTime,
-    utc: `${dayName}, ${date} ${monthName} ${year} ${hours-2}:${minutes}:${seconds} GMT`
+    utc: `${dayName}, ${date} ${monthName} ${year} ${hours}:${minutes}:${seconds} GMT`
   })
 
 })
@@ -68,7 +68,7 @@ if(isNaN(dateObject)){
   res.json({ error: "Invalid Date" })
 }
 else{
-    const date = dateObject.getDate();
+    const date = dateObject.getDate().toString().padStart(2, 0);
     const dayNum = dateObject.getDay();
     const dayName = days[dayNum];
     const unixTime = dateObject.getTime();
