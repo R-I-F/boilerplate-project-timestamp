@@ -24,29 +24,27 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
-// Array of weekday names
-const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-
-// Array of month names
-const months = ['Jan', 'Feb', 'March', 'April', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
-app.get("/api/", function(req, res){
-  const dateObject = new Date()
-  const unixTime = dateObject.getTime();
+// app.get("/api/", function(req, res){
+//   const dateObject = new Date()
+//   const unixTime = dateObject.getTime();
 
 
-  res.json({
-    unix: unixTime,
-    utc: dateObject.toUTCString()
-  })
+//   res.json({
+//     unix: unixTime,
+//     utc: dateObject.toUTCString()
+//   })
 
-})
+// })
 
 app.get("/api/:date?", function(req, res){
 
-  const inputParam = req.params.date
+  const inputParam = req.params.date;
   let dateObject;
-  if (isNumeric(inputParam)){ 
+
+  if(!inputParam){
+    dateObject = new Date();
+  }
+  else if (isNumeric(inputParam)){ 
     // else if it is a unix timestamp
     dateObject = new Date(parseInt(inputParam))
   }
