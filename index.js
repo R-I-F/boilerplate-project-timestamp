@@ -49,19 +49,19 @@ app.get("/api/:date?", function(req, res){
     dateObject = new Date(parseInt(inputParam))
   }
   else {
-    // if the req.params.date is in the format of a date
+    // if the req.params.date is in the format of a string
     dateObject = new Date(inputParam);    
   }
 
   if(isNaN(dateObject)){
-    res.json({ error: "Invalid Date" })
+    return res.json({ error: "Invalid Date" })
   }
   else{
       const unixTime = dateObject.getTime();
-      res.json({
+      return res.json({
           unix: unixTime,
           utc: dateObject.toUTCString()
-        })
+        });
     }
 
 })
