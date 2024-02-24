@@ -24,26 +24,46 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
+// Array of weekday names
+const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+// Array of month names
+const months = ['Jan', 'Feb', 'March', 'April', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+app.get("/api/", function(req, res){
+  const dateObject = new Date()
+  const date = dateObject.getDate();
+  const unixTime = dateObject.getTime();
+  const dayNum = dateObject.getDay();
+  const dayName = days[dayNum];
+  const monthNum = dateObject.getMonth();
+  const monthName = months[monthNum];
+  const year = dateObject.getFullYear();
+  const hours = String(dateObject.getHours()).padStart(2, '0');
+  const minutes = String(dateObject.getMinutes()).padStart(2, '0');
+  const seconds = String(dateObject.getSeconds()).padStart(2, '0');
+
+  res.json({
+    unix: unixTime,
+    utc: `${dayName}, ${date} ${monthName} ${year} ${hours}:${minutes}:${seconds} GMT`
+  })
+
+})
+
 app.get("/api/:date", function(req, res){
 
   const inputParam = req.params.date
   let dateObject;
-  if (inputParam.includes("-")){
-      dateObject = new Date(inputParam)
-  }
-  else{
-      dateObject = new Date(parseInt(inputParam))
-  }
-  dateObject.setHours(0);
-  dateObject.setMinutes(0);
-  dateObject.setSeconds(0);
-  
-  // Array of weekday names
-  const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-  
-  // Array of month names
-  const months = ['Jan', 'Feb', 'March', 'April', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  
+  if (inputParam.includes("-")){ 
+    // if the req.params.date is in the format of a date
+    dateObject = new Date(inputParam);
+    timeSetter(dateObject);
+}
+else{
+    // else if it is a unix timestamp
+    dateObject = new Date(parseInt(inputParam))
+    timeSetter(dateObject);
+}
   
   const date = dateObject.getDate();
   const dayNum = dateObject.getDay();
@@ -67,6 +87,13 @@ app.get("/api/:date", function(req, res){
   }
 
 })
+
+function timeSetter(dateObject){
+    dateObject.setHours(0);
+    dateObject.setMinutes(0);
+    dateObject.setSeconds(0);
+}
+
 
 
 
