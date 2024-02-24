@@ -45,7 +45,7 @@ app.get("/api/", function(req, res){
 
   res.json({
     unix: unixTime,
-    utc: `${dayName}, ${date} ${monthName} ${year} ${hours}:${minutes}:${seconds} GMT`
+    utc: `${dayName}, ${date} ${monthName} ${year} ${hours-2}:${minutes}:${seconds} GMT`
   })
 
 })
