@@ -46,13 +46,13 @@ app.get("/api/:date?", function(req, res){
 
   const inputParam = req.params.date
   let dateObject;
-  if (inputParam.includes("-")){ 
-    // if the req.params.date is in the format of a date
-    dateObject = new Date(inputParam);
+  if (isNumeric(inputParam)){ 
+    // else if it is a unix timestamp
+    dateObject = new Date(parseInt(inputParam))
   }
-  else{
-      // else if it is a unix timestamp
-      dateObject = new Date(parseInt(inputParam))
+  else {
+    // if the req.params.date is in the format of a date
+    dateObject = new Date(inputParam);    
   }
 
   if(isNaN(dateObject)){
@@ -67,6 +67,12 @@ app.get("/api/:date?", function(req, res){
     }
 
 })
+
+function isNumeric(str) {
+  // Use regular expression to match only numeric characters
+  return /^\d+$/.test(str);
+}
+
 
 // Listen on port set in environment variable or default to 3000
 var listener = app.listen(process.env.PORT || 3000, function () {
