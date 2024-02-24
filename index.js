@@ -65,7 +65,7 @@ else{
   
 
 if(isNaN(dateObject)){
-  res.json({ error: "invalid Date" })
+  res.json({ error: "Invalid Date" })
 }
 else{
     const date = dateObject.getDate();
