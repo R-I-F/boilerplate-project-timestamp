@@ -32,20 +32,12 @@ const months = ['Jan', 'Feb', 'March', 'April', 'May', 'June', 'July', 'Aug', 'S
 
 app.get("/api/", function(req, res){
   const dateObject = new Date()
-  const date = dateObject.getDate().toString().padStart(2, 0);
   const unixTime = dateObject.getTime();
-  const dayNum = dateObject.getDay();
-  const dayName = days[dayNum];
-  const monthNum = dateObject.getMonth();
-  const monthName = months[monthNum];
-  const year = dateObject.getFullYear();
-  const hours = String(dateObject.getHours()).padStart(2, '0');
-  const minutes = String(dateObject.getMinutes()).padStart(2, '0');
-  const seconds = String(dateObject.getSeconds()).padStart(2, '0');
+
 
   res.json({
     unix: unixTime,
-    utc: `${dayName}, ${date} ${monthName} ${year} ${hours}:${minutes}:${seconds} GMT`
+    utc: dateObject.toUTCString()
   })
 
 })
@@ -57,36 +49,24 @@ app.get("/api/:date?", function(req, res){
   if (inputParam.includes("-")){ 
     // if the req.params.date is in the format of a date
     dateObject = new Date(inputParam);
-}
-else{
-    // else if it is a unix timestamp
-    dateObject = new Date(parseInt(inputParam))
-}
-  
-
-if(isNaN(dateObject)){
-  res.json({ error: "Invalid Date" })
-}
-else{
-    const date = dateObject.getDate().toString().padStart(2, 0);
-    const dayNum = dateObject.getDay();
-    const dayName = days[dayNum];
-    const unixTime = dateObject.getTime();
-    const monthNum = dateObject.getMonth();
-    const monthName = months[monthNum];
-    const year = dateObject.getFullYear();
-    const hours = String(dateObject.getHours()).padStart(2, '0');
-    const minutes = String(dateObject.getMinutes()).padStart(2, '0');
-    const seconds = String(dateObject.getSeconds()).padStart(2, '0');
-    res.json({
-        unix: unixTime,
-        utc: `${dayName}, ${date} ${monthName} ${year} ${hours}:${minutes}:${seconds} GMT`
-      })
+  }
+  else{
+      // else if it is a unix timestamp
+      dateObject = new Date(parseInt(inputParam))
   }
 
+  if(isNaN(dateObject)){
+    res.json({ error: "Invalid Date" })
+  }
+  else{
+      const unixTime = dateObject.getTime();
+      res.json({
+          unix: unixTime,
+          utc: dateObject.toUTCString()
+        })
+    }
+
 })
-
-
 
 // Listen on port set in environment variable or default to 3000
 var listener = app.listen(process.env.PORT || 3000, function () {
